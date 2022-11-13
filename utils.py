@@ -114,14 +114,18 @@ def send_message(message: str):
             mail_pass = par['password']  # 口令
 
             sender = par['user']
-            receivers = [par['receiver']]
+            receivers = par['receiver']
             logger.info(receivers)
 
-            message_mime = MIMEText(message, 'plain', 'utf-8')
-            message_mime['From'] = Header(par['user'], 'utf-8')
-            message_mime['To'] = Header(par['receiver'], 'utf-8')
-
-            message_mime['Subject'] = Header("健康上报结果", 'utf-8')
+            # message_mime = MIMEText(message, 'plain', 'utf-8')
+            # message_mime['From'] = Header(par['user'], 'utf-8')
+            # message_mime['To'] = Header(par['receiver'], 'utf-8')
+            # message_mime['Subject'] = Header("健康上报结果", 'utf-8')
+            
+            message_mime = MIMEText(message)
+            message_mime['From'] = par['user']
+            message_mime['To'] = par['receiver']
+            message_mime['Subject'] = Header("健康打卡结果")
 
             smtp_obj = smtplib.SMTP_SSL(mail_host, 465)
             smtp_obj.login(mail_user, mail_pass)
